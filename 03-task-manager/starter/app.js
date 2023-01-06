@@ -8,9 +8,9 @@ require('dotenv').config()
 
 app.use(express.json())
 
-app.get('/hello', (req, res)=>{
-    res.send('Hello')
-})
+// app.get('/hello', (req, res)=>{
+//     res.send('Hello')
+// })
 
 
 app.use('/api/v1/tasks', task)
