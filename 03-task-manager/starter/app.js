@@ -1,9 +1,12 @@
 const express = require('express')
 const app = express()
-const port = 3000;
+const port =  process.env.PORT ||  3000;
 const task = require('./routes/task')
 const connectDB = require('./DB/connection')
 require('dotenv').config()
+const error = require('../starter/middleware/error')
+
+
 
 
 app.use(express.static('../starter/public'))
@@ -18,6 +21,9 @@ app.use(express.json())
 
 
 app.use('/api/v1/tasks', task)
+
+
+app.use(error)
 
 
 
