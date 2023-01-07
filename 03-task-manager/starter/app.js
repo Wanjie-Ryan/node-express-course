@@ -6,6 +6,10 @@ const connectDB = require('./DB/connection')
 require('dotenv').config()
 
 
+app.use(express.static('../starter/public'))
+
+
+
 app.use(express.json())
 
 // app.get('/hello', (req, res)=>{
@@ -14,6 +18,7 @@ app.use(express.json())
 
 
 app.use('/api/v1/tasks', task)
+
 
 
 
