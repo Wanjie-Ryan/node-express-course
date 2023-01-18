@@ -5,6 +5,7 @@ const notfound = require('./middleware/not-found')
 // const errorhandler = require('./middleware/errorhandler')
 const connectDB = require('./db/connect')
 require('dotenv').config()
+const routes = require('./routes/products')
 
 
 
@@ -19,6 +20,7 @@ app.get('/', (req, res)=>{
     res.send('<h1> Store API </h1><a href ="/api/v1/products">Products</a')
 })
 
+app.use('/api/v1/products', routes)
 
 // products route
 
