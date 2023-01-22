@@ -57,7 +57,40 @@ const login  = async(req, res) =>{
 
 const dashboard = async (req, res)=>{
 
-    const token = Math.floor(Math.random() * 100)
+    // console.log(req.headers)
+
+    //validation of the header and send the data with the username
+
+    const authHeader = req.headers.authorization
+
+    if(!authHeader || !authHeader.startsWith('Bearer ')){
+
+
+        res.status(401).json({msg:'No token has been provided'})
+
+
+    } 
+
+    //split the authheader and pick the token which is the second value
+    const token = authHeader.split(' ')[1]
+
+    try{
+
+        const decoded = jwt.verify(token, process.env.jwt_secret)
+        console.log(decoded)
+
+    }
+
+    catch(error){
+
+        res.status(401).json({msg:'Not authorized'})
+
+
+    }
+
+
+    // console.log(token)
+    const luckynum = Math.floor(Math.random() * 100)
 
     res.status(200).json({msg:`Hello Ryan`, secret: `Your authorized data and lucky number is ${token}`})
 }
