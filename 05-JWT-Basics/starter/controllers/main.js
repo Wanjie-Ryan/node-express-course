@@ -69,30 +69,32 @@ const dashboard = async (req, res)=>{
         res.status(401).json({msg:'No token has been provided'})
 
 
-    } 
+        // 401 is authorization error
+    }  
 
     //split the authheader and pick the token which is the second value
     const token = authHeader.split(' ')[1]
 
     try{
 
+        // verification of the token, pass in the token and the secret key in the .env
         const decoded = jwt.verify(token, process.env.jwt_secret)
-        console.log(decoded)
-
+        // console.log(decoded)
+        
+        const luckynum = Math.floor(Math.random() * 100)
+    
+        res.status(200).json({msg:`Hello ${decoded.username}`, secret: `Your authorized data and lucky number is ${luckynum}`})
     }
 
     catch(error){
 
-        res.status(401).json({msg:'Not authorized'})
+        res.status(401).json({msg:'Not authorized to access this route'})
 
 
     }
 
 
     // console.log(token)
-    const luckynum = Math.floor(Math.random() * 100)
-
-    res.status(200).json({msg:`Hello Ryan`, secret: `Your authorized data and lucky number is ${token}`})
 }
 
 
