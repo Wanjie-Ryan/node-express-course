@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const authrouter = require('./routes/auth')
 const jobrouter = require('./routes/jobs')
-
+const connectionDB = require('./db/connect')
 
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
@@ -35,6 +35,8 @@ const port = process.env.PORT || 3000;
 
 const start = async () => {
   try {
+
+    await connectionDB(process.env.mongoose_connection)
     app.listen(port, () =>
       console.log(`Server is listening on port ${port}...`)
     );
