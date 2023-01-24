@@ -7,6 +7,8 @@
 // first import the jwt package
 const jwt = require('jsonwebtoken')
 
+const {StatusCodes} = require('http-status-codes')
+
 const login  = async(req, res) =>{
 
     try{
@@ -16,7 +18,7 @@ const login  = async(req, res) =>{
 
         if(!username || !password){
 
-            res.status(400).json({msg: 'Please provide the full details'})
+            res.status(StatusCodes.BAD_REQUEST).json({msg: 'Please provide the full details'})
         }
 
         // temporary id, as theere is no DB at the moment
@@ -37,13 +39,13 @@ const login  = async(req, res) =>{
 
 
 
-        res.status(200).json({msg: 'created user', token})
+        res.status(StatusCodes.OK).json({msg: 'created user', token})
 
     }
 
     catch(error){
 
-        res.status(500).json({msg: error})
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg: error})
     }
 
 
@@ -61,37 +63,44 @@ const dashboard = async (req, res)=>{
 
     //validation of the header and send the data with the username
 
-    const authHeader = req.headers.authorization
+    // const authHeader = req.headers.authorization
 
-    if(!authHeader || !authHeader.startsWith('Bearer ')){
-
-
-        res.status(401).json({msg:'No token has been provided'})
+    // if(!authHeader || !authHeader.startsWith('Bearer ')){
 
 
-        // 401 is authorization error
-    }  
+    //     res.status(401).json({msg:'No token has been provided'})
 
-    //split the authheader and pick the token which is the second value
-    const token = authHeader.split(' ')[1]
 
-    try{
+    //     // 401 is authorization error
+    // }  
 
-        // verification of the token, pass in the token and the secret key in the .env
-        const decoded = jwt.verify(token, process.env.jwt_secret)
-        // console.log(decoded)
-        
-        const luckynum = Math.floor(Math.random() * 100)
+    // //split the authheader and pick the token which is the second value
+    // const token = authHeader.split(' ')[1]
     
-        res.status(200).json({msg:`Hello ${decoded.username}`, secret: `Your authorized data and lucky number is ${luckynum}`})
-    }
+    const luckynum = Math.floor(Math.random() * 100)
 
-    catch(error){
-
-        res.status(401).json({msg:'Not authorized to access this route'})
+    res.status(StatusCodes.OK).json({msg:`Hello ${req.user.username}`, secret: `Your authorized data and lucky number is ${luckynum}`})
 
 
-    }
+
+
+    // res.status(200).json({msg:`Hello ${decoded.username}`, secret: `Your authorized data and lucky number is ${luckynum}`})
+
+
+    // try{
+
+    //     // verification of the token, pass in the token and the secret key in the .env
+    //     const decoded = jwt.verify(token, process.env.jwt_secret)
+    //     // console.log(decoded)
+        
+    // }
+
+    // catch(error){
+
+    //     res.status(401).json({msg:'Not authorized to access this route'})
+
+
+    // }
 
 
     // console.log(token)
