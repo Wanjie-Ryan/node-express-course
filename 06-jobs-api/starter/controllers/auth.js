@@ -1,6 +1,7 @@
 
 const user = require('../models/User')
 const {StatusCodes} = require('http-status-codes')
+// const bcrypt = require('bcryptjs')
 
 
 const register = async (req, res) => {
@@ -10,7 +11,36 @@ const register = async (req, res) => {
 
     try{
 
+        // CONTROLLER VALIDATOR
+        //CHECKING OF ERRORS IN THE CONTROLLER.
+
+        // const {name, email, password} = req.body;
+
+        // if(!name || !email || !password){
+
+        //     res.status(StatusCodes.BAD_REQUEST).json({msg:"provide full details!"})
+        // }
+
+
+            // USING BCRYPT
+        
+            // const {name, email, password} = req.body
+
+            // salt is used to generate random bytes 
+            // 10 refers to how many number of bytes will be returned
+            // const salt = await bcrypt.genSalt(10)
+
+            //generates the hashed passwords
+            // const hashedpassword = await bcrypt.hash(password, salt)
+
+            // const userorigi ={name, email, password:hashedpassword}
+
+             // USING BCRYPT
+
+        // MONGOOSE VALIDATOR
+
         // req.body is passed in as we want mongoose to do all the validation
+
 
         const newuser = await user.create({...req.body})
 
