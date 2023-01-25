@@ -68,7 +68,67 @@ const register = async (req, res) => {
 
 
 const login = async (req, res) => {
-  res.send("login user");
+
+
+    try{
+
+        //controller validator
+
+        const {email, password} = req.body
+    
+        if(!email || !password){
+    
+            res.status(StatusCodes.UNAUTHORIZED).json({msg:'Provide the full details please.'})
+        }
+
+        const newuser = await user.findOne({email})
+
+
+        // if email does not exist in the database, then throw the error
+        if(!newuser){
+
+            res.status(StatusCodes.UNAUTHORIZED).json({msg:'Invalid email address'})
+        }
+
+
+        // CHECKS IF PASSWORD MATCHES
+        const correctpassword = await newuser.checkpwd(password)
+
+        if(!correctpassword){
+
+            res.status(StatusCodes.UNAUTHORIZED).json({msg:'Invalid password'})
+        }
+
+        // if(!newuser && !correctpassword){
+
+        //     res.status(StatusCodes.UNAUTHORIZED).json({msg:'Invalid email address and password! Kua serious jameni'})
+        // }
+
+
+        const token = newuser.jwtoken()
+
+        res.status(StatusCodes.OK).json({name:newuser.name, token})
+
+
+    }
+
+
+    catch(error){
+
+
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({msg:error})
+    }
+
+
+
+
+
+
+
+
+
+
+  
 };
 
 

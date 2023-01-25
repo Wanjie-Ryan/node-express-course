@@ -53,14 +53,19 @@ UserSchema.methods.jwtoken = function(){
     return jwt.sign({userId:this._id, name:this.name}, process.env.jwt_secret, {expiresIn: process.env.jwt_expires})
 
 
+} 
+
+// BCRYPT HAS A METHOD CALLED COMPARE THAT ALLOWS YOU TO COMPARE HASHED PASSWORDS AND CHECK IF THEY MATCH
+// the method checks for the value coming in with the request which is the candidatepassword and is passed in as an argument
+
+
+UserSchema.methods.checkpwd = async function(candidatePassword){
+
+    const ismatch = await bcrypt.compare(candidatePassword, this.password)
+
+    return ismatch
+
 }
-
-
-
-
-
-
-
 
 
 
