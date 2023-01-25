@@ -2,7 +2,7 @@
 const user = require('../models/User')
 const {StatusCodes} = require('http-status-codes')
 // const bcrypt = require('bcryptjs')
-
+// const jwt = require('jsonwebtoken')
 
 const register = async (req, res) => {
 //   res.send("register user");
@@ -45,7 +45,10 @@ const register = async (req, res) => {
         const newuser = await user.create({...req.body})
 
 
-        res.status(StatusCodes.CREATED).json({newuser})
+        // const token = jwt.sign({userId:newuser._id, name:newuser.name },  'jwt_secret' , {expiresIn:'10d' })
+        const token = newuser.jwtoken()
+
+        res.status(StatusCodes.CREATED).json({name:newuser.name, token})
     }
 
     catch(error){
