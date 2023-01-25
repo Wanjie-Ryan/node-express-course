@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const UserSchema = new mongoose.Schema({
 
@@ -44,6 +45,17 @@ UserSchema.pre('save', async function(){
     this.password =await bcrypt.hash(this.password, salt)
 
 })
+
+//use the function keyword as it always points to the document and you can access the details using this keyword.
+
+UserSchema.methods.jwtoken = function(){
+
+    return jwt.sign({userId:this._id, name:this.name}, process.env.jwt_secret, {expiresIn: process.env.jwt_expires})
+
+
+}
+
+
 
 
 
