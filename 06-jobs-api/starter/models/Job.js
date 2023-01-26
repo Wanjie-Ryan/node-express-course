@@ -22,7 +22,7 @@ const jobSchema = new mongoose.Schema({
 
 
 
-    // createdby helps to tie the jobs created to the actual user who created them.(they are tow different collections in the DB and therefore you link them)
+    // createdby helps to tie the jobs created to the actual user who created them.(they are two different collections in the DB and therefore you link them)
 
     //tying the jobs model to the user model
     // ref is used to specify which model you are referencing
@@ -35,5 +35,7 @@ const jobSchema = new mongoose.Schema({
 
 
 }, {timestamps:true})
+
+//timestamp has the createdAt and updatedAt properties which help in creation of an instance...
 
 module.exports = mongoose.model('jobs', jobSchema )

@@ -28,7 +28,7 @@ const authmiddleware = async (req, res, next)=>{
 
         const verification = jwt.verify(token, process.env.jwt_secret)
 
-        req.user ={userId:verification.id , name:verification.name}
+        req.user ={userId:verification.userId , name:verification.name}
 
         next()
     }
