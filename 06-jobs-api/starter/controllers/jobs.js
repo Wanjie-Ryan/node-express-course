@@ -51,18 +51,33 @@ const createjob = async(req, res)=>{
     }
 
 
-
-
-
-
-
 }
   
   const getsingleJob = async (req, res) => {
-    res.send("getsingleJob");
+    
+
+    try{
+
+      const {user:{userId}, params:{id:jobId}} = req
+
+      const personjobs = await jobs.findOne({_id:jobId, createdBy:userId})
+
+      if(!personjobs){
+
+        res.status(StatusCodes.NOT_FOUND).json({msg:`job with id ${jobId} cannot be found`})
+      }
+
+      res.status(StatusCodes.OK).json({personjobs})
 
 
 
+    }
+
+    catch(error){
+
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error})
+
+    }
 
 
   };
