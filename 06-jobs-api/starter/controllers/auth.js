@@ -4,6 +4,12 @@ const {StatusCodes} = require('http-status-codes')
 // const bcrypt = require('bcryptjs')
 // const jwt = require('jsonwebtoken')
 
+
+      //REGISTER PART
+
+
+
+
 const register = async (req, res) => {
 //   res.send("register user");
 
@@ -61,7 +67,7 @@ const register = async (req, res) => {
 
 
 
-
+                //LOGIN PART
 
 
 
