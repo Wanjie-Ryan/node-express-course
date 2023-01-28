@@ -41,7 +41,6 @@ const createjob = async(req, res)=>{
       // res.send(req.user)
 
 
-
     }
 
     catch(error){
@@ -79,6 +78,10 @@ const createjob = async(req, res)=>{
 
     catch(error){
 
+      // if(err.name == 'CastError'){
+
+      //   res.status(StatusCodes.NOT_FOUND).send(msg = `No item with id ${err.value}`)
+      // }
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error})
 
     }
@@ -115,9 +118,6 @@ const createjob = async(req, res)=>{
 
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error})
     }
-
-
-
 
 
 
