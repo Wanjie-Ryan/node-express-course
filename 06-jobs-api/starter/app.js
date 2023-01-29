@@ -2,6 +2,15 @@ require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
 const app = express();
+
+// SECURITY PACKAGES
+const helmet = require('helmet')
+const cors = require('cors')
+const xss = require('xss-clean')
+const ratelimit = require('express-rate-limit')
+
+// SECURITY PACKAGES
+
 const authrouter = require('./routes/auth')
 const jobrouter = require('./routes/jobs')
 const connectionDB = require('./db/connect')
@@ -13,6 +22,28 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 
 app.use(express.json());
 // extra packages
+
+// SECURITY
+app.set('trust proxy', 1)
+app.use(ratelimit({
+
+  windowMs:15 * 60 * 1000,  //15 minutes
+  max:100, // limit each ip to 100 requests per windowMs
+}))
+
+app.use(helmet())
+app.use(cors())
+app.use(xss())
+
+
+
+
+
+// SECURITY
+
+
+
+
 
 // routes
 // app.get('/', (req, res) => {
